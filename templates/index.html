@@ -13,6 +13,21 @@
     </style>
 </head>
 <body>
+        <!-- Add the following inside the <body> tag of your HTML template -->
+    <div id="net-info">
+    <h2>Network Interfaces</h2>
+    <ul>
+        {% for interface, addresses_info in net_info.items() %}
+            <li><strong>{{ interface }}</strong>
+                <ul>
+                    {% for address_info in addresses_info %}
+                        <li>Family: {{ address_info.family }}, Address: {{ address_info.address }}, Netmask: {{ address_info.netmask }}, Broadcast: {{ address_info.broadcast }}</li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
+    </div>
     <div class="container">
         <h1>System Monitoring</h1>
         <div id="cpu-gauge"></div>
