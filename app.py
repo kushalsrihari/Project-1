@@ -7,10 +7,26 @@ app = Flask(__name__)
 def index():
     cpu_metric = psutil.cpu_percent()
     mem_metric = psutil.virtual_memory().percent
+    net_info = psutil.net_if_addrs()
+
+    # Extracting network interface information
+    net_interfaces = {}
+    for interface, addresses in net_info.items():
+        addresses_info = []
+        for address in addresses:
+            addresses_info.append({
+                'family': address.family,
+                'address': address.address,
+                'netmask': address.netmask,
+                'broadcast': address.broadcast
+            })
+        net_interfaces[interface] = addresses_info
+
     Message = None
     if cpu_metric > 80 or mem_metric > 80:
         Message = "High CPU or Memory Detected, scale up!!!"
-    return render_template("index.html", cpu_metric=cpu_metric, mem_metric=mem_metric, message=Message)
+
+    return render_template("index.html", cpu_metric=cpu_metric, mem_metric=mem_metric, net_info=net_interfaces, message=Message)
 
 if __name__=='__main__':
-    app.run(debug=True, host = '0.0.0.0')
+    app.run(debug=True, host='0.0.0.0')
