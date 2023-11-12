@@ -1,0 +1,13 @@
+# values.yaml
+
+replicaCount: 3
+
+image:
+  repository: kushalsrihari/capstone-1.0
+  tag: latest
+
+service:
+  name: capstone-service
+  type: LoadBalancer
+  externalPort: 80
+  internalPort: 5000
