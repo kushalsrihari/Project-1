@@ -19,4 +19,4 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           ports:
             - name: http
-              containerPort: 5000
+              containerPort: {{ .Values.service.internalPort }}
